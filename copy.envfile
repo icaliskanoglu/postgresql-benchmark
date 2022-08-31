@@ -1,5 +1,4 @@
 PGHOST=
 PGPASSWORD=
 PGUSER=postgres
-PGDATABASE=ihsan
-PGAPPNAME=pgbench-init
+PGDATABASE=postgres
