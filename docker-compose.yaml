@@ -38,7 +38,7 @@ services:
         "-j",
         "8",
         "-T",
-        "300",
+        "600",
         "-P",
         "1", # show progress every 1 sec
         "-f",
@@ -62,7 +62,7 @@ services:
         "-j",
         "8",
         "-T",
-        "300",
+        "600",
         "-P",
         "1", # show progress every 1 sec
         "-f",
@@ -108,7 +108,7 @@ services:
         "-j",
         "8",
         "-T",
-        "300",
+        "600",
         "-P",
         "1", # show progress every 1 sec
         "-f",
@@ -132,7 +132,7 @@ services:
         "-j",
         "8",
         "-T",
-        "300",
+        "600",
         "-P",
         "1", # show progress every 1 sec
         "-f",
