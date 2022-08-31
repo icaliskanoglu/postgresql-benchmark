@@ -1,5 +1,75 @@
 version: '3.0'
 services:
+  db-init-gv:
+    image: postgres:13
+    env_file:
+      - .env_file_gv
+    environment:
+      PGAPPNAME: psql
+    volumes:
+      - ./init-db.sql:/init-db.sql
+    command: [ "psql", "-f", "init-db.sql", "-d", "postgres" ]
+  pgbench-init-gv:
+    image: postgres:13
+    env_file:
+      - .env_file_gv
+    environment:
+      PGAPPNAME: pgbench-init
+    command:
+      [
+        "pgbench",
+        "-i", # initialize
+        "-s",
+        "5" # scale
+      ]
+  pgbench-write-gv:
+    image: postgres:13
+    env_file:
+      - .env_file_gv
+    environment:
+      PGAPPNAME: pgbench
+    volumes:
+      - ./write-benchmark.sql:/write-benchmark.sql
+    command:
+      [
+        "pgbench",
+        "-c",
+        "16",
+        "-j",
+        "8",
+        "-T",
+        "300",
+        "-P",
+        "1", # show progress every 1 sec
+        "-f",
+        "/write-benchmark.sql",
+        "--report-latencies",
+        "postgres" # database name
+      ]
+  pgbench-read-gv:
+    image: postgres:13
+    env_file:
+      - .env_file_gv
+    environment:
+      PGAPPNAME: pgbench
+    volumes:
+      - ./read-benchmark.sql:/read-benchmark.sql
+    command:
+      [
+        "pgbench",
+        "-c",
+        "16",
+        "-j",
+        "8",
+        "-T",
+        "300",
+        "-P",
+        "1", # show progress every 1 sec
+        "-f",
+        "/read-benchmark.sql",
+        "--report-latencies",
+        "postgres" # database name
+      ]
   db-init:
     image: postgres:13
     env_file:
@@ -8,24 +78,20 @@ services:
       PGAPPNAME: psql
     volumes:
       - ./init-db.sql:/init-db.sql
-    command: [
-      "psql",
-      "-f",
-      "init-db.sql",
-      "-d",
-      "postgres"
-    ]
+    command: [ "psql", "-f", "init-db.sql", "-d", "postgres" ]
   pgbench-init:
     image: postgres:13
     env_file:
       - .env_file
     environment:
       PGAPPNAME: pgbench-init
-    command: [
-      "pgbench",
-      "-i", # initialize
-      "-s", "5" # scale
-    ]
+    command:
+      [
+        "pgbench",
+        "-i", # initialize
+        "-s",
+        "5" # scale
+      ]
   pgbench-write:
     image: postgres:13
     env_file:
@@ -34,16 +100,22 @@ services:
       PGAPPNAME: pgbench
     volumes:
       - ./write-benchmark.sql:/write-benchmark.sql
-    command: [
-      "pgbench",
-      "-c", "16",
-      "-j", "8",
-      "-T", "300",
-      "-P", "1", # show progress every 1 sec
-      "-f", "/write-benchmark.sql",
-      "--report-latencies",
-      "postgres" # database name
-    ]
+    command:
+      [
+        "pgbench",
+        "-c",
+        "16",
+        "-j",
+        "8",
+        "-T",
+        "300",
+        "-P",
+        "1", # show progress every 1 sec
+        "-f",
+        "/write-benchmark.sql",
+        "--report-latencies",
+        "postgres" # database name
+      ]
   pgbench-read:
     image: postgres:13
     env_file:
@@ -52,13 +124,19 @@ services:
       PGAPPNAME: pgbench
     volumes:
       - ./read-benchmark.sql:/read-benchmark.sql
-    command: [
-      "pgbench",
-      "-c", "16",
-      "-j", "8",
-      "-T", "300",
-      "-P", "1", # show progress every 1 sec
-      "-f", "/read-benchmark.sql",
-      "--report-latencies",
-      "postgres" # database name
-    ]
+    command:
+      [
+        "pgbench",
+        "-c",
+        "16",
+        "-j",
+        "8",
+        "-T",
+        "300",
+        "-P",
+        "1", # show progress every 1 sec
+        "-f",
+        "/read-benchmark.sql",
+        "--report-latencies",
+        "postgres" # database name
+      ]
