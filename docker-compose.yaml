@@ -40,7 +40,7 @@ services:
       "-P", "1", # show progress every 1 sec
       "-f", "/write-benchmark.sql",
       "--report-latencies",
-      "benchmark" # database name
+      "postgres" # database name
     ]
   pgbench-read:
     image: postgres:13
@@ -58,5 +58,5 @@ services:
       "-P", "1", # show progress every 1 sec
       "-f", "/read-benchmark.sql",
       "--report-latencies",
-      "benchmark" # database name
+      "postgres" # database name
     ]
