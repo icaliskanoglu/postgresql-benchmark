@@ -11,7 +11,9 @@ services:
     command: [
       "psql",
       "-f",
-      "init-db.sql"
+      "init-db.sql",
+      "-d",
+      "postgres"
     ]
   pgbench-init:
     image: postgres:13
