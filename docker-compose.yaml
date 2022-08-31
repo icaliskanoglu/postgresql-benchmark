@@ -6,10 +6,6 @@ services:
       - .env_file
     environment:
       PGAPPNAME: psql
-      PGHOST: $DB_HOST
-      PGUSER: postgres
-      PGPASSWORD: $DB_PASSWORD
-      PGDATABASE: ihsan
     volumes:
       - ./init-db.sql:/init-db.sql
     command: [
@@ -23,10 +19,6 @@ services:
       - .env_file
     environment:
       PGAPPNAME: pgbench-init
-      PGHOST: $DB_HOST
-      PGUSER: postgres
-      PGPASSWORD: $DB_PASSWORD
-      PGDATABASE: ihsan
     command: [
       "pgbench",
       "-i", # initialize
@@ -38,10 +30,6 @@ services:
       - .env_file
     environment:
       PGAPPNAME: pgbench
-      PGHOST: $DB_HOST
-      PGUSER: postgres
-      PGPASSWORD: $DB_PASSWORD
-      PGDATABASE: ihsan
     volumes:
       - ./write-benchmark.sql:/write-benchmark.sql
     command: [
@@ -60,10 +48,6 @@ services:
       - .env_file
     environment:
       PGAPPNAME: pgbench
-      PGHOST: $DB_HOST
-      PGUSER: postgres
-      PGPASSWORD: $DB_PASSWORD
-      PGDATABASE: ihsan
     volumes:
       - ./read-benchmark.sql:/read-benchmark.sql
     command: [
