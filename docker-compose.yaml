@@ -1,6 +1,6 @@
 version: '3.0'
 services:
-  psql:
+  db-init:
     image: postgres:13
     environment:
       PGAPPNAME: psql
