@@ -1,0 +1,70 @@
+version: '3.0'
+services:
+  psql:
+    image: postgres:13
+    environment:
+      PGAPPNAME: psql
+      PGHOST: $DB_HOST
+      PGUSER: postgres
+      PGPASSWORD: $DB_PASSWORD
+      PGDATABASE: ihsan
+    volumes:
+      - ./init-db.sql:/init-db.sql
+    command: [
+      "psql",
+      "-f",
+      "init-db.sql"
+    ]
+  pgbench-init:
+    image: postgres:13
+    environment:
+      PGAPPNAME: pgbench-init
+      PGHOST: $DB_HOST
+      PGUSER: postgres
+      PGPASSWORD: $DB_PASSWORD
+      PGDATABASE: ihsan
+    command: [
+      "pgbench",
+      "-i", # initialize
+      "-s", "5" # scale
+    ]
+  pgbench-write:
+    image: postgres:13
+    environment:
+      PGAPPNAME: pgbench
+      PGHOST: $DB_HOST
+      PGUSER: postgres
+      PGPASSWORD: $DB_PASSWORD
+      PGDATABASE: ihsan
+    volumes:
+      - ./write-benchmark.sql:/write-benchmark.sql
+    command: [
+      "pgbench",
+      "-c", "16",
+      "-j", "8",
+      "-T", "300",
+      "-P", "1", # show progress every 1 sec
+      "-f", "/write-benchmark.sql",
+      "--report-latencies",
+      "pgbench" # database name
+    ]
+  pgbench-read:
+    image: postgres:13
+    environment:
+      PGAPPNAME: pgbench
+      PGHOST: $DB_HOST
+      PGUSER: postgres
+      PGPASSWORD: $DB_PASSWORD
+      PGDATABASE: ihsan
+    volumes:
+      - ./read-benchmark.sql:/read-benchmark.sql
+    command: [
+      "pgbench",
+      "-c", "16",
+      "-j", "8",
+      "-T", "300",
+      "-P", "1", # show progress every 1 sec
+      "-f", "/read-benchmark.sql",
+      "--report-latencies",
+      "pgbench" # database name
+    ]
