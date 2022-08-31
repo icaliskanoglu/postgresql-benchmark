@@ -2,7 +2,7 @@ export BENCHMARK_HOST=
 export BENCHMARK_PORT=5432
 export BENCHMARK_DB=ihsan
 export PGPASSWORD=
-export BENCHMARK_USER=admin
+export BENCHMARK_USER=postgres
 # pgbench control environment variables
 export BENCHMARK_CONNECTIONS=16
 export BENCHMARK_THREADS=8
