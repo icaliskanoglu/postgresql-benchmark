@@ -1,0 +1,13 @@
+export BENCHMARK_HOST=
+export BENCHMARK_PORT=5432
+export BENCHMARK_DB=ihsan
+export PGPASSWORD=
+export BENCHMARK_USER=admin
+# pgbench control environment variables
+export BENCHMARK_CONNECTIONS=16
+export BENCHMARK_THREADS=8
+export BENCHMARK_SQL_FILE=write-benchmark.sql
+# time in seconds to run test
+export BENCHMARK_TIME=300
+
+pgbench -c $BENCHMARK_CONNECTIONS -j $BENCHMARK_THREADS -T $BENCHMARK_TIME -U $BENCHMARK_USER -d $BENCHMARK_DB -h $BENCHMARK_HOST -p $BENCHMARK_PORT -f $BENCHMARK_SQL_FILE
