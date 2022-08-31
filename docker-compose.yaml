@@ -9,7 +9,9 @@ services:
     volumes:
       - ./init-db.sql:/init-db.sql
     command: [
-      "env"
+      "psql",
+      "-f",
+      "init-db.sql"
     ]
   pgbench-init:
     image: postgres:13
