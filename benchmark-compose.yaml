@@ -52,3 +52,17 @@ services:
       [
         "/read.sh"
       ]
+  pgbench-read-simple:
+    network_mode: "host"
+    image: postgres:13.7
+    env_file:
+      - .env_file
+    environment:
+      PGAPPNAME: pgbench
+    volumes:
+      - ./scripts/read-simple.sql:/read-simple.sql
+      - ./scripts/pgbench-read-simple.sh:/read-simple.sh
+    command:
+      [
+        "/read-simple.sh"
+      ]
