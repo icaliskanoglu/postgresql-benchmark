@@ -1,1 +1,1 @@
-SELECT 1 FROM order_item;
+SELECT 1;
