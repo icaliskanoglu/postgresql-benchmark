@@ -80,5 +80,25 @@ tps = 11004.106083 (excluding connections establishing)
 
 ```
 
+
+Run:
+
+```
+docker-compose -f benchmark-compose.yaml up pgbench-read-simple
+...
+
+scaling factor: 1
+query mode: simple
+number of clients: 16
+number of threads: 8
+duration: 30 s
+number of transactions actually processed: 330378
+latency average = 1.442 ms
+latency stddev = 1.224 ms
+tps = 11001.976114 (including connections establishing)
+tps = 11004.106083 (excluding connections establishing)
+
+```
+
 Not:
 TPS: Transactions per Second 

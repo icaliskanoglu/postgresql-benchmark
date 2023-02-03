@@ -9,7 +9,11 @@ services:
       PGAPPNAME: psql
     volumes:
       - ./scripts/init-db.sql:/init-db.sql
-    command: [ "psql", "-f", "init-db.sql", "-d", "postgres" ]
+      - ./scripts/init-db.sh:/init-db.sh
+    command:
+      [
+        "/init-db.sh"
+      ]
   pgbench-init:
     network_mode: "host"
     image: postgres:13.7
@@ -18,7 +22,7 @@ services:
     environment:
       PGAPPNAME: pgbench-init
     volumes:
-      - ./scripts/write-benchmark.sql:/write-benchmark.sql
+      - ./scripts/write.sql:/write.sql
       - ./scripts/pgbench-init.sh:/init.sh
     command:
       [
@@ -32,7 +36,7 @@ services:
     environment:
       PGAPPNAME: pgbench
     volumes:
-      - ./scripts/write-benchmark.sql:/write-benchmark.sql
+      - ./scripts/write.sql:/write.sql
       - ./scripts/pgbench-write.sh:/write.sh
     command:
       [
@@ -46,7 +50,7 @@ services:
     environment:
       PGAPPNAME: pgbench
     volumes:
-      - ./scripts/read-benchmark.sql:/read-benchmark.sql
+      - ./scripts/read.sql:/read.sql
       - ./scripts/pgbench-read.sh:/read.sh
     command:
       [
